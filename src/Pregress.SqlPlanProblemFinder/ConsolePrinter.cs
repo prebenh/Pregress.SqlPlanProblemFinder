@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SqlPlanProblemFinder
+namespace Pregress.SqlPlanProblemFinder
 {
     internal class ConsolePrinter
     {

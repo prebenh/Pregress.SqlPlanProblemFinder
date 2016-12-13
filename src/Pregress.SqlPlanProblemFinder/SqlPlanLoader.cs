@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml.Linq;
 
-namespace SqlPlanProblemFinder
+namespace Pregress.SqlPlanProblemFinder
 {
     internal class SqlPlanLoader
     {
