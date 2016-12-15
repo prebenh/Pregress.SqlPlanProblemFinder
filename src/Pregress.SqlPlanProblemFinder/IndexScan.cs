@@ -28,9 +28,10 @@ namespace Pregress.SqlPlanProblemFinder
             Table = scalarString[2];
             Column = scalarString[3].Remove(scalarString[3].IndexOf('='));
         }
-
-        public string CreateStatement => $"CREATE NONCLUSTERED INDEX [IX_{Table}_{Column}] ON [{Table}] ([{Column}])";
-        public string DropStatement => $"DROP INDEX [IX_{Table}_{Column}] ON [{Table}]";
+        public string IndexName => $"IX_{Table}_{Column}_temp";
+        public string IfIndexNotExists => $"IF NOT EXISTS (SELECT 1 FROM sys.indexes i WHERE i.object_id = OBJECT_ID('{Table}') AND i.name = '{IndexName}')";
+        public string CreateStatement => $"CREATE NONCLUSTERED INDEX [{IndexName}] ON [{Table}] ([{Column}])";
+        public string DropStatement => $"DROP INDEX [{IndexName}] ON [{Table}]";
 
         public override string ToString()
         {
