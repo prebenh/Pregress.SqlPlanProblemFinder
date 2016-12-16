@@ -5,10 +5,10 @@ namespace Pregress.SqlPlanProblemFinder
 {
     internal class ConsolePrinter
     {
-        private readonly IEnumerable<IndexScan> _indexScans;
-        private IEnumerable<IndexScan> _tableScans;
+        private readonly IEnumerable<IndexSuggestion> _indexScans;
+        private IEnumerable<IndexSuggestion> _tableScans;
 
-        public ConsolePrinter(IEnumerable<IndexScan> indexScans, IEnumerable<IndexScan> tableScans)
+        public ConsolePrinter(IEnumerable<IndexSuggestion> indexScans, IEnumerable<IndexSuggestion> tableScans)
         {
             _indexScans = indexScans;
             _tableScans = tableScans;
@@ -38,10 +38,10 @@ namespace Pregress.SqlPlanProblemFinder
             Console.ResetColor();
         }
 
-        private static void PrintScan(IndexScan scan)
+        private static void PrintScan(IndexSuggestion suggestion)
         {
-            Console.WriteLine(scan);
-            Console.WriteLine(scan.CreateStatement);
+            Console.WriteLine(suggestion);
+            Console.WriteLine(suggestion.CreateStatement);
             Console.WriteLine();
         }
     }

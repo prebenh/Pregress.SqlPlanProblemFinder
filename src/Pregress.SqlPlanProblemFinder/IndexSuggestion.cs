@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 namespace Pregress.SqlPlanProblemFinder
 {
-    internal struct IndexScan
+    internal class IndexSuggestion
     {
         public string Table { get; set; }
         public string Column { get; set; }
@@ -14,20 +14,20 @@ namespace Pregress.SqlPlanProblemFinder
 
         public XAttribute EstimateRows { get; set; }
 
-        public IndexScan(XElement x)
+        public IndexSuggestion(string table, string column, XElement x)
         {
-            var parent = x.Parent;
-            EstimateRows = parent.Attribute("EstimateRows");
-            AvgRowSize = parent.Attribute("AvgRowSize");
-            TableCardinality = parent.Attribute("TableCardinality");
+            Table = table.Replace("[", "").Replace("]", "");
+            Column = column.Replace("[", "").Replace("]", "");
 
-            var scalarString = x.Descendants(
-                "{http://schemas.microsoft.com/sqlserver/2004/07/showplan}ScalarOperator")
-                .Attributes("ScalarString").First().Value.Replace("[", "").Replace("]", "").Split('.');
-
-            Table = scalarString[2];
-            Column = scalarString[3].Remove(scalarString[3].IndexOf('='));
+            if (x != null)
+            {
+                var relOp = x.Ancestors(Constants.XmlNamespace + "RelOp").First();
+                EstimateRows = relOp.Attribute("EstimateRows");
+                AvgRowSize = relOp.Attribute("AvgRowSize");
+                TableCardinality = relOp.Attribute("TableCardinality");
+            }
         }
+
         public string IndexName => $"IX_{Table}_{Column}_temp";
         public string IfIndexNotExists => $"IF NOT EXISTS (SELECT 1 FROM sys.indexes i WHERE i.object_id = OBJECT_ID('{Table}') AND i.name = '{IndexName}')";
         public string CreateStatement => $"CREATE NONCLUSTERED INDEX [{IndexName}] ON [{Table}] ([{Column}])";
@@ -37,5 +37,7 @@ namespace Pregress.SqlPlanProblemFinder
         {
             return $"-- {TableCardinality} {AvgRowSize} {EstimateRows}";
         }
+
+        public static IndexSuggestion Undefined => new IndexSuggestion(Constants.Undefined, Constants.Undefined, null);
     }
 }

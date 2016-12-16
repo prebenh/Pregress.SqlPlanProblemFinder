@@ -44,8 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsolePrinter.cs" />
-    <Compile Include="FindIndexScans.cs" />
-    <Compile Include="IndexScan.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="IndexCreators\ColumnReference.cs" />
+    <Compile Include="IndexCreators\IPredicate.cs" />
+    <Compile Include="IndexCreators\PredicateFactory.cs" />
+    <Compile Include="IndexCreators\ScalarOperator.cs" />
+    <Compile Include="ProblemFinders\FindIndexScans.cs" />
+    <Compile Include="IndexSuggestion.cs" />
+    <Compile Include="ProblemFinders\FindTableScans.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlFileCreator.cs" />
@@ -54,6 +60,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

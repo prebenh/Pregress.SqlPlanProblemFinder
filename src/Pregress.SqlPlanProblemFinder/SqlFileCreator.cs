@@ -5,10 +5,10 @@ namespace Pregress.SqlPlanProblemFinder
 {
     internal class SqlFileCreator
     {
-        private readonly IEnumerable<IndexScan> _indexScans;
-        private IEnumerable<IndexScan> _tableScans;
+        private readonly IEnumerable<IndexSuggestion> _indexScans;
+        private IEnumerable<IndexSuggestion> _tableScans;
 
-        public SqlFileCreator(IEnumerable<IndexScan> indexScans, IEnumerable<IndexScan> tableScans)
+        public SqlFileCreator(IEnumerable<IndexSuggestion> indexScans, IEnumerable<IndexSuggestion> tableScans)
         {
             _indexScans = indexScans;
             _tableScans = tableScans;
