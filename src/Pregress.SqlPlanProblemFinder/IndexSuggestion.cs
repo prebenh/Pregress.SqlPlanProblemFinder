@@ -38,6 +38,14 @@ namespace Pregress.SqlPlanProblemFinder
             return $"-- {TableCardinality} {AvgRowSize} {EstimateRows}";
         }
 
-        public static IndexSuggestion Undefined => new IndexSuggestion(Constants.Undefined, Constants.Undefined, null);
+        public static readonly IndexSuggestion Undefined = new IndexSuggestion(Constants.Undefined, Constants.Undefined, null);
+
+        public override bool Equals(object obj)
+        {
+            var second = obj as IndexSuggestion;
+            if (second == null) return false;
+
+            return Column == second.Column && Table == second.Table;
+        }
     }
 }
