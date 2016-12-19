@@ -31,6 +31,7 @@ namespace Pregress.SqlPlanProblemFinder
                 foreach (var scan in _tableScans)
                 {
                     writer.WriteLine(scan);
+                    writer.WriteLine(scan.IfIndexExists);
                     writer.WriteLine(scan.DropStatement);
                     writer.WriteLine();
                 }
@@ -48,6 +49,7 @@ namespace Pregress.SqlPlanProblemFinder
                 foreach (var scan in _indexScans)
                 {
                     writer.WriteLine(scan);
+                    writer.WriteLine(scan.IfIndexExists);
                     writer.WriteLine(scan.DropStatement);
                     writer.WriteLine();
                 }

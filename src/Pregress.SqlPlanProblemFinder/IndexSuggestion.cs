@@ -30,6 +30,8 @@ namespace Pregress.SqlPlanProblemFinder
 
         public string IndexName => $"IX_{Table}_{Column}_temp";
         public string IfIndexNotExists => $"IF NOT EXISTS (SELECT 1 FROM sys.indexes i WHERE i.object_id = OBJECT_ID('{Table}') AND i.name = '{IndexName}')";
+        public string IfIndexExists => $"IF EXISTS (SELECT 1 FROM sys.indexes i WHERE i.object_id = OBJECT_ID('{Table}') AND i.name = '{IndexName}')";
+
         public string CreateStatement => $"CREATE NONCLUSTERED INDEX [{IndexName}] ON [{Table}] ([{Column}])";
         public string DropStatement => $"DROP INDEX [{IndexName}] ON [{Table}]";
 
